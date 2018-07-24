@@ -17,7 +17,7 @@ import (
 
 const (
 	name    = "beatit"
-	version = "0.6.26"
+	version = "0.6.24"
 	desc    = "Stress test fullerite handlers"
 )
 
@@ -93,6 +93,10 @@ func main() {
 			Name:  "datadog, d",
 			Usage: "Enable Datadog handler",
 		},
+		cli.BoolFlag{
+			Name:  "wavefront, w",
+			Usage: "Enable Wavefront handler",
+		},
 		cli.IntFlag{
 			Name:  "num-metrics",
 			Value: 100,
@@ -162,6 +166,11 @@ func start(ctx *cli.Context) {
 		}
 		if ctx.Bool("datadog") {
 			h := newHandler("Datadog", c, ctx.Int("num-datapoints"))
+			go h.Run()
+			handlers = append(handlers, h)
+		}
+		if ctx.Bool("wavefront") {
+			h := newHandler("Wavefront", c, ctx.Int("num-datapoints"))
 			go h.Run()
 			handlers = append(handlers, h)
 		}

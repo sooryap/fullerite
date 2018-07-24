@@ -21,7 +21,7 @@ func assertEmpty(t *testing.T, channel chan metric.Metric) {
 }
 
 func TestNewHandler(t *testing.T) {
-	names := []string{"Graphite", "Kairos", "SignalFx", "Datadog", "Log"}
+	names := []string{"Wavefront", "Graphite", "Kairos", "SignalFx", "Datadog", "Log"}
 	for _, name := range names {
 		h := New(name)
 		assert.NotNil(t, h, "should create a Handler for "+name)
